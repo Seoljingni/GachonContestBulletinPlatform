@@ -40,6 +40,10 @@ public class MemberController {
             bindingResult.rejectValue("passwordCheck", "notCoincidePassword","두 비밀번호가 일치하지 않습니다.");
         }
 
+        // 이메일 도메인 체크 (@gachon.ac.kr 여부)
+        if (form.getEmail() == null || !form.getEmail().endsWith("@gachon.ac.kr")) {
+            bindingResult.rejectValue("email", "invalidEmailDomain", "가천대학교 이메일(@gachon.ac.kr)만 가입할 수 있습니다.");
+        }
 
         if(bindingResult.hasErrors()){
             return "member/addMemberForm";

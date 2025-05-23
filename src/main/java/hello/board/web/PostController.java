@@ -2,6 +2,7 @@ package hello.board.web;
 
 import hello.board.domain.comment.Comment;
 import hello.board.domain.member.Member;
+import hello.board.domain.member.UserType;
 import hello.board.domain.post.Post;
 import hello.board.service.member.MemberService;
 import hello.board.service.post.CommentService;
@@ -58,7 +59,12 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/edit")
-    public String editPostForm(@PathVariable Long postId, Model model){
+    public String editPostForm(@PathVariable Long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
+                               Model model){
+        if (loginMember == null || loginMember.getUserType() != UserType.INSTITUTION) {
+            return "redirect:/access-denied";
+        }
+
         Post post = postService.findById(postId);
 
         model.addAttribute("post",post);
@@ -67,8 +73,12 @@ public class PostController {
     }
 
     @PostMapping("/{postId}/edit")
-    public String editPost(@PathVariable long postId,
+    public String editPost(@PathVariable long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                            @Validated @ModelAttribute("form")PostEditForm form, BindingResult bindingResult, Model model){
+        if (loginMember == null || loginMember.getUserType() != UserType.INSTITUTION) {
+            return "redirect:/access-denied";
+        }
+
         if(bindingResult.hasErrors()){
             model.addAttribute("post", postService.findById(postId));
             model.addAttribute("form",form);
@@ -81,7 +91,11 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/delete")
-    public String deleteForm(@PathVariable long postId, Model model){
+    public String deleteForm(@PathVariable long postId, @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        if (loginMember == null || loginMember.getUserType() != UserType.INSTITUTION) {
+            return "redirect:/access-denied";
+        }
+
         Post post = postService.findById(postId);
 
         model.addAttribute("post", post);
@@ -94,6 +108,10 @@ public class PostController {
                              @Validated @ModelAttribute("member") PostDeleteMemberForm form, BindingResult bindingResult,
                              @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                              Model model){
+        if (loginMember == null || loginMember.getUserType() != UserType.INSTITUTION) {
+            return "redirect:/access-denied";
+        }
+
         loginMember = memberService.findById(loginMember.getId()).get();
         if(bindingResult.hasErrors()){
             model.addAttribute("post", postService.findById(postId));

@@ -38,7 +38,8 @@ public class MemberService {
                 form.getNickname(),
                 form.getLoginId(),
                 form.getPassword(),
-                form.getEmail());
+                form.getEmail(),
+                form.getUserType());
         memberRepository.save(member);
         return member;
     }

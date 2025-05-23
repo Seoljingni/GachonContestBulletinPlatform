@@ -64,6 +64,13 @@
 
             <div class="field-error" th:errors="*{passwordCheck}" />
         </div>
+        <div>
+            <label for="userType">회원 유형</label>
+            <select name="userType" id="userType">
+                <option value="NORMAL">일반 사용자</option>
+                <option value="INSTITUTION">캠퍼스 기관</option>
+            </select>
+        </div>
 
 
         <hr class="my-4">

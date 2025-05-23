@@ -3,8 +3,11 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Primary;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -29,6 +32,9 @@ public class Member {
     private String password;
     @Email
     private String email;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private UserType userType;
 
 
 
@@ -40,11 +46,12 @@ public class Member {
         this.password = password;
     }
 
-    public Member(String name, String nickname, String loginId, String password, String email) {
+    public Member(String name, String nickname, String loginId, String password, String email, UserType userType) {
         this.name = name;
         this.nickname = nickname;
         this.loginId = loginId;
         this.password = password;
         this.email = email;
+        this.userType = userType;
     }
 }

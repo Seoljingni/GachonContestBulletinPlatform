@@ -45,6 +45,8 @@ public class LoginController {
         }
         //Id,pw 입력받아서 loginService.login 로직 실행 -> 성공 : member 반환 , 실패 : null 반환
         Member loginMember = loginService.login(form.getLoginId(),form.getPassword());
+        log.info("로그인된 사용자: {}", loginMember.getLoginId());
+        log.info("로그인된 사용자 userType: {}", loginMember.getUserType());
         //null 반환시 없는 id입니다 오류 반환
         if(loginMember == null){
             bindingResult.reject("loginFail");

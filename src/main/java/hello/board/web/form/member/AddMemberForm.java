@@ -1,5 +1,6 @@
 package hello.board.web.form.member;
 
+import hello.board.domain.member.UserType;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -21,4 +22,5 @@ public class AddMemberForm {
     private String passwordCheck;
     @Email @NotBlank
     private String email;
+    private UserType userType;
 }

@@ -1,6 +1,7 @@
 package hello.board.web;
 
 import hello.board.domain.member.Member;
+import hello.board.domain.member.UserType;
 import hello.board.domain.post.Post;
 import hello.board.service.member.MemberService;
 import hello.board.service.post.PostService;
@@ -57,7 +58,11 @@ public class BoardController {
      * 글쓰기 폼 GET
      */
     @GetMapping("/write-form")
-    public String writeForm(Model model){
+    public String writeForm(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember, Model model){
+        if (loginMember == null || loginMember.getUserType() != UserType.INSTITUTION) {
+            return "redirect:/access-denied";
+        }
+
         model.addAttribute("form", new WritingForm());
         return "post/writeForm";
     }
@@ -69,6 +74,9 @@ public class BoardController {
     public String addWriting(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false) Member loginMember,
                              @Validated @ModelAttribute("form")WritingForm form, BindingResult bindingResult,
                              RedirectAttributes redirectAttributes){
+        if (loginMember == null || loginMember.getUserType() != UserType.INSTITUTION) {
+            return "redirect:/access-denied";
+        }
 
         // 검증에 실패하면 다시 입력 폼으로
         if (bindingResult.hasErrors()) {

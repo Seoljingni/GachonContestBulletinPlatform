@@ -30,6 +30,7 @@ public class MemberController {
     public String addMember(@Validated @ModelAttribute("form")AddMemberForm form, BindingResult bindingResult,
                             RedirectAttributes redirectAttributes){
         log.info("AddMember [{}]",form);
+        log.info("유형 선택: {}", form.getUserType());
         //loginId 중복 체크
         if(memberService.isDuplicate(form.getLoginId())){
             bindingResult.rejectValue("loginId","duplicateLoginId","이미 있는 아이디 입니다.");

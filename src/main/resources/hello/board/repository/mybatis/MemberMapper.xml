@@ -2,25 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hello.board.repository.mybatis.MemberMapper">
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO member(name, nickname, login_id, password, email)
-            values (#{name}, #{nickname}, #{loginId}, #{password}, #{email})
+    <insert id="save" parameterType="hello.board.domain.member.Member">
+        INSERT INTO member(name, nickname, login_id, password, email, user_type)
+        VALUES (#{name}, #{nickname}, #{loginId}, #{password}, #{email}, #{userType})
     </insert>
 
     <select id="findById" resultType="Member">
-        SELECT id, name, nickname, login_id, password, email
+        SELECT id, name, nickname, login_id, password, email, user_type
         FROM member
-        where id = #{id}
+        WHERE id = #{id}
     </select>
 
     <select id="findByLoginId" resultType="Member">
-        SELECT id, name, nickname, login_id, password, email
+        SELECT id, name, nickname, login_id, password, email, user_type
         FROM member
-        where login_id = #{loginId}
+        WHERE login_id = #{loginId}
     </select>
 
     <select id="findAll" resultType="Member">
-        SELECT id, name, nickname, login_id, password, email
+        SELECT id, name, nickname, login_id, password, email, user_type
         FROM member
     </select>
 

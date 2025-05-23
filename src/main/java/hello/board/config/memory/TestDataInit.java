@@ -1,6 +1,7 @@
 package hello.board.config.memory;
 
 import hello.board.domain.member.Member;
+import hello.board.domain.member.UserType;
 import hello.board.repository.MemberRepository;
 import hello.board.domain.post.Post;
 import hello.board.repository.PostRepository;
@@ -19,7 +20,7 @@ public class TestDataInit {
     @EventListener(ApplicationReadyEvent.class)
     public void memberInitData(){
 
-        Member member = new Member("tester-Kim","imtester","test","test!","tester@test.com");
+        Member member = new Member("tester-Kim","imtester","test","test!","tester@test.com", UserType.INSTITUTION);
         memberRepository.save(member);
         for(int i=0;i<10;i++){
             String loginId = "writer"+Integer.toString(i);

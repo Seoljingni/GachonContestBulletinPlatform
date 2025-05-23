@@ -46,6 +46,7 @@ public class PostController {
         PostHtmlForm form = postService.getHtmlPostForm(post);
         model.addAttribute("post", form);
         model.addAttribute("commentForm", new Comment());
+        model.addAttribute("loginMember", loginMember);
         return "post/post";
     }
 

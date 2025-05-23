@@ -43,21 +43,31 @@
     <hr class="my-3">
 
     <div class="row">
-        <div class="col">
-            <button class="w-100 btn btn-primary btn-md "
-                    onclick="location.href='findPosts.html'"
-                    th:onclick="|location.href='@{/board(searchCode='writerId', searchWord=${member.loginId})}'|"
-                    th:text="#{button.member.writing}"
-                    type="button">내가 쓴 글</button>
-        </div>
-        <div class="col">
-            <button class="w-100 btn btn-primary btn-md "
-                    onclick="location.href='writeForm.html'"
-                    th:onclick="|location.href='@{/board/write-form}'|"
-                    th:text="#{button.writing}"
-                    type="button">글쓰기</button>
-        </div>
+        <th:block th:if="${member.userType.name() == 'INSTITUTION'}">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-md"
+                        th:onclick="|location.href='@{/board(searchCode='writerId', searchWord=${member.loginId})}'|"
+                        th:text="#{button.member.writing}"
+                        type="button">내가 쓴 글</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-md"
+                        th:onclick="|location.href='@{/board/write-form}'|"
+                        th:text="#{button.writing}"
+                        type="button">글쓰기</button>
+            </div>
+        </th:block>
+
+        <th:block th:if="${member.userType.name() == 'NORMAL'}">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-md"
+                        th:onclick="|location.href='@{/member/applications}'|">
+                    My Applications
+                </button>
+            </div>
+        </th:block>
     </div>
+
 
 </div>
 </body>

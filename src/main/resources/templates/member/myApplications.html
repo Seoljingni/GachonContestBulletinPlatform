@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid py-4" style="background-color: #ccffcc">
+    <a th:href="@{/board}" style="text-decoration: none">
+        <h1 style="color: black">&#x1F3E0; Board Service</h1>
+    </a>
+</div>
+<br>
+
+<div class="container" style="max-width: 1000px">
+    <div class="py-2">
+        <h2>My Applied Contests</h2>
+        <p th:if="${#lists.isEmpty(appliedPosts)}">You have not applied to any contests yet.</p>
+    </div>
+
+    <!-- 신청내역 테이블 -->
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 100px; text-align: center">num</th>
+                <th style="width: 500px; text-align: center">title</th>
+                <th style="width: 150px; text-align: center">writer</th>
+                <th style="width: 150px; text-align: center">application cancel</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${appliedPosts}">
+                <td style="text-align: center" th:text="${post.id}">1</td>
+                <td style="text-align: center">
+                    <a th:href="@{/board/post/{postId}(postId=${post.id})}" th:text="${post.title}">공모전 제목</a>
+                </td>
+                <td style="text-align: center" th:text="${post.writerId}">작성자</td>
+                <td style="text-align: center">
+                    <form th:action="@{/application/cancel}" method="post">
+                        <input type="hidden" name="postId" th:value="${post.id}" />
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Cancel</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
